@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\QueryFilter\Comment\Body;
+use App\QueryFilter\Comment\Email;
+use App\QueryFilter\Comment\Name;
 use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
+use Illuminate\Pipeline\Pipeline;
 
 class CommentController extends Controller
 {
@@ -15,9 +19,15 @@ class CommentController extends Controller
         $this->commentRepository = $commentRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->commentRepository->all();
+        return app(Pipeline::class)
+            ->send($this->commentRepository->all())
+            ->through([
+                Name::class,
+                Email::class,
+                Body::class
+            ])->thenReturn();
     }
 
     public function show($comment)
