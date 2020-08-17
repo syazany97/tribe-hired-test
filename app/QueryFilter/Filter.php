@@ -17,14 +17,14 @@ abstract class Filter
         return $this->applyFilter($next($request));
     }
 
-    private function applyFilter($param)
+    protected function applyFilter($param)
     {
         return $param->filter(function($key)  {
             return Str::contains(Str::lower($key[$this->filterName()]), Str::lower(request()->get($this->filterName())));
         })->values();
     }
 
-    private function filterName()
+    protected function filterName()
     {
         return Str::snake(Str::lower(class_basename($this)));
     }
