@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\QueryFilter\Comment\Body;
 use App\QueryFilter\Comment\Email;
-use App\QueryFilter\Comment\Id;
 use App\QueryFilter\Comment\Name;
 use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
